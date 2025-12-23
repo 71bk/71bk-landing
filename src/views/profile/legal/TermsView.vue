@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <section class="legal-page">
     <div class="container">
       <h1>使用條款（Terms of Service）</h1>

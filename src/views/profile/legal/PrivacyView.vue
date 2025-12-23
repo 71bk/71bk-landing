@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <section class="legal-page">
     <div class="container">
       <h1>隱私權政策（Privacy Policy）</h1>

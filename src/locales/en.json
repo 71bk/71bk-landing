@@ -1,0 +1,49 @@
+{
+    "hero": {
+        "title": "Building {highlight} with Modern Tech.",
+        "highlight": "Reliable Systems",
+        "description": "Hi, I'm 71BK. A Full-Stack Engineer focused on solving complex problems and delivering high-quality code for scalable applications.",
+        "viewProjects": "View Projects",
+        "aboutMe": "About Me"
+    },
+    "nav": {
+        "work": "Work",
+        "skills": "Skills",
+        "about": "About",
+        "contact": "Contact",
+        "getInTouch": "Get in Touch"
+    },
+    "featured": {
+        "title": "Selected Work",
+        "subtitle": "A showcase of technical projects and production applications.",
+        "projects": {
+            "ecommerce": {
+                "title": "E-Commerce Dashboard",
+                "description": "A real-time analytics dashboard for online retailers featuring live sales tracking and inventory management."
+            },
+            "saas": {
+                "title": "SaaS Analytics Platform",
+                "description": "Marketing automation tool designed for small businesses to track campaign performance across channels."
+            },
+            "api": {
+                "title": "API Gateway Service",
+                "description": "High-performance microservices gateway handling authentication, rate limiting, and request routing."
+            }
+        }
+    },
+    "skills": {
+        "title": "Core Technologies",
+        "subtitle": "A comprehensive overview of my technical stack and development tools.",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "devops": "DevOps & Database"
+    },
+    "cta": {
+        "title": "Interested in collaboration?",
+        "subtitle": "Let's build something great together. I'm currently available for freelance work and open to full-time opportunities.",
+        "button": "Get in Touch"
+    },
+    "footer": {
+        "copyright": "71BK © 2024"
+    }
+}

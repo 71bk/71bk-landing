@@ -1,0 +1,49 @@
+{
+    "hero": {
+        "title": "以現代技術打造{highlight}",
+        "highlight": "可靠系統",
+        "description": "嗨，我是 71BK。一位專注於解決複雜問題、為可擴展應用程式提供高品質程式碼的全端工程師。",
+        "viewProjects": "查看作品",
+        "aboutMe": "關於我"
+    },
+    "nav": {
+        "work": "作品",
+        "skills": "技能",
+        "about": "關於",
+        "contact": "聯絡",
+        "getInTouch": "聯繫我"
+    },
+    "featured": {
+        "title": "精選作品",
+        "subtitle": "技術專案與生產應用程式的展示。",
+        "projects": {
+            "ecommerce": {
+                "title": "電商數據儀表板",
+                "description": "為線上零售商打造的即時分析儀表板，具備即時銷售追蹤與庫存管理功能。"
+            },
+            "saas": {
+                "title": "SaaS 分析平台",
+                "description": "為中小企業設計的行銷自動化工具，可追蹤跨渠道的活動成效。"
+            },
+            "api": {
+                "title": "API 閘道服務",
+                "description": "高效能微服務閘道，處理身份驗證、流量限制與請求路由。"
+            }
+        }
+    },
+    "skills": {
+        "title": "核心技術",
+        "subtitle": "我的技術棧與開發工具概覽。",
+        "frontend": "前端",
+        "backend": "後端",
+        "devops": "DevOps 與資料庫"
+    },
+    "cta": {
+        "title": "有興趣合作嗎？",
+        "subtitle": "讓我們一起打造精彩的東西。目前可接案，也開放全職機會。",
+        "button": "聯繫我"
+    },
+    "footer": {
+        "copyright": "71BK © 2024"
+    }
+}

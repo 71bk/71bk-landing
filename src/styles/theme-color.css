@@ -1,0 +1,19 @@
+/* Theme Color System */
+@layer base {
+  :root {
+    /* Option A: Modern SaaS (Indigo) */
+    --color-primary: 79 70 229;     /* Indigo-600 */
+    --color-primary-dark: 67 56 202; /* Indigo-700 (Hover state) */
+    
+    /* Slate Scale */
+    --color-background: 248 250 252; /* Slate-50 */
+    --color-surface: 255 255 255;    /* White */
+    
+    /* Text Colors */
+    --color-text-main: 15 23 42;     /* Slate-900 */
+    --color-text-muted: 100 116 139; /* Slate-500 */
+    
+    /* Border */
+    --color-border: 226 232 240;     /* Slate-200 */
+  }
+}

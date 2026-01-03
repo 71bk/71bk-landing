@@ -29,7 +29,12 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
+instance.interceptors.request.use((config) => {
+  if (typeof config.url === 'string' && config.url.startsWith('/api/')) {
+    config.url = config.url.replace(/^\/api/, '')
+  }
+  return config
+})
 // 新增一個回應攔截器
 instance.interceptors.response.use(
   (response) => {

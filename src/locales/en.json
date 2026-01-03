@@ -10,7 +10,7 @@
         "location": "Based in Taipei, Taiwan"
     },
     "nav": {
-        "work": "Work",
+        "work": "home",
         "skills": "Skills",
         "about": "About",
         "projects": "Projects",
@@ -52,7 +52,9 @@
         "button": "Get in Touch"
     },
     "footer": {
-        "copyright": "71BK © 2024"
+        "copyright": "71BK © 2026",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service"
     },
     "intro": {
         "statement1": "I craft",

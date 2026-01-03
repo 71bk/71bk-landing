@@ -1,12 +1,38 @@
+<script setup>
+import { useI18n } from 'vue-i18n'
+import { RouterLink } from 'vue-router'
+
+const { t } = useI18n()
+</script>
+
 <template>
   <footer class="bg-background py-12 border-t border-border">
     <div class="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-2">
-        <div class="flex h-6 w-6 items-center justify-center rounded bg-primary text-surface">
-          <span class="material-symbols-outlined text-sm font-bold">terminal</span>
+      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+        <div class="flex items-center gap-2">
+          <div class="flex h-6 w-6 items-center justify-center rounded bg-primary text-surface">
+            <span class="material-symbols-outlined text-sm font-bold">terminal</span>
+          </div>
+          <p class="text-sm font-semibold text-main">{{ t('footer.copyright') }}</p>
         </div>
-        <p class="text-sm font-semibold text-main">71BK &copy; 2026</p>
+        
+        <!-- Legal Links -->
+        <div class="flex items-center gap-6">
+          <RouterLink 
+            to="/privacy" 
+            class="text-xs text-muted hover:text-primary transition-colors font-medium uppercase tracking-wider"
+          >
+            {{ t('footer.privacy') }}
+          </RouterLink>
+          <RouterLink 
+            to="/terms" 
+            class="text-xs text-muted hover:text-primary transition-colors font-medium uppercase tracking-wider"
+          >
+            {{ t('footer.terms') }}
+          </RouterLink>
+        </div>
       </div>
+
       <div class="flex gap-6">
         <a class="text-muted hover:text-primary transition-colors" href="https://github.com/71bk">
           <span class="sr-only">GitHub</span>

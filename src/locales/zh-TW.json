@@ -52,7 +52,9 @@
         "button": "聯繫我"
     },
     "footer": {
-        "copyright": "71BK © 2024"
+        "copyright": "71BK © 2026",
+        "privacy": "隱私權政策",
+        "terms": "使用條款"
     },
     "intro": {
         "statement1": "我打造",

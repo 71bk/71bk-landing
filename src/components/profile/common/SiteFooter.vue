@@ -44,7 +44,7 @@ const { t } = useI18n()
             ></path>
           </svg>
         </a>
-        <a class="text-muted hover:text-primary transition-colors" href="www.linkedin.com/in/ian-hsu-2879b12a1">
+        <a class="text-muted hover:text-primary transition-colors" href="https://www.linkedin.com/in/ian-hsu-2879b12a1">
           <span class="sr-only">LinkedIn</span>
           <svg aria-hidden="true" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
             <path

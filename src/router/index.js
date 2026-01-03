@@ -17,4 +17,32 @@ const router = createRouter({
   },
 });
 
+// Admin 路由認證守衛
+router.beforeEach(async (to, from, next) => {
+  // 檢查是否為需要認證的 Admin 路由
+  const isAdminRoute = to.path.startsWith('/admin');
+  const isPublicAdminRoute = ['/admin/login', '/admin/oauth-callback'].includes(to.path);
+
+  if (isAdminRoute && !isPublicAdminRoute) {
+    // 動態導入 authStore 以避免循環依賴
+    const { useAuthStore } = await import('@/store/auth');
+    const authStore = useAuthStore();
+
+    // 如果尚未檢查過認證狀態，先檢查
+    if (!authStore.isAuthenticated) {
+      const isLoggedIn = await authStore.checkAuth();
+      if (!isLoggedIn) {
+        // 未登入，導向登入頁
+        return next({
+          path: '/admin/login',
+          query: { redirect: to.fullPath }
+        });
+      }
+    }
+  }
+
+  next();
+});
+
 export default router;
+

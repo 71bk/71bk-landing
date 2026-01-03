@@ -3,7 +3,7 @@ import router from "@/router";
 
 const envBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const baseUrl =
-  typeof envBaseUrl === "string" && envBaseUrl.trim() ? envBaseUrl.trim() : "http://localhost:8080";
+  typeof envBaseUrl === "string" && envBaseUrl.trim() ? envBaseUrl.trim() : "https://admin.71bk.dev";
 const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
 const apiBaseUrl = /\/api$/.test(normalizedBaseUrl) ? normalizedBaseUrl : `${normalizedBaseUrl}/api`;
 

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import publicPortfolioApi from '@/api/publicPortfolio'
 import { mockCategories } from '@/data/mockData'
+import { getImageUrl } from '@/utils/imageUrl'
 
 const normalizeLocale = (locale) => {
   if (!locale) return 'zh-TW'
@@ -78,11 +79,12 @@ const normalizeProject = (project, locale) => {
     title: pickLocalized(project, 'title', resolvedLocale),
     summary: pickLocalized(project, 'summary', resolvedLocale),
     content: pickContent(project, resolvedLocale),
-    coverImage:
+    coverImage: getImageUrl(
       project.coverImage ??
       project.coverImageUrl ??
       project.cover_image_url ??
-      null,
+      null
+    ),
     category: project.category ?? project.categoryCode ?? project.category_code ?? null,
     featured: Boolean(project.featured),
     status: project.status ?? null,

@@ -41,7 +41,7 @@
           <div ref="menuFooter" class="menu-footer">
             <div class="social-links">
               <a href="https://github.com/71bk" target="_blank" rel="noopener" class="social-link">GitHub</a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/ian-hsu-2879b12a1" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
             </div>
             <p class="copyright">© 2026 71BK</p>
           </div>
@@ -80,7 +80,7 @@ const closeBtnMagnetic = useMagnetic(closeBtn, { strength: 0.4 })
 // ==================
 const navItems = computed(() => [
   { to: '/', label: t('nav.work') },
-  { to: '/projects', label: 'Projects' },
+  { to: '/projects', label: t('nav.projects') },
   { to: '/about', label: t('nav.about') },
   { to: '/contact', label: t('nav.getInTouch') }
 ])

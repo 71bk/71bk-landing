@@ -10,10 +10,10 @@
         "location": "台北，台灣"
     },
     "nav": {
-        "work": "作品",
+        "work": "主頁",
+        "projects": "作品集",
         "skills": "技能",
         "about": "關於",
-        "projects": "作品集",
         "contact": "聯絡",
         "getInTouch": "聯繫我"
     },

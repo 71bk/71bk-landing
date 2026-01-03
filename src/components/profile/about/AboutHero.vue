@@ -18,7 +18,7 @@ const avatarUrl = "/hero-bg.jpg";
       <!-- Headings -->
       <div class="space-y-2">
         <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-main">
-          71BK
+           {{ $t("about.hero.name") }}
           <span class="text-primary">.</span>
         </h1>
         <h2 class="text-xl sm:text-2xl font-bold text-muted">{{ $t("about.hero.title") }}</h2>

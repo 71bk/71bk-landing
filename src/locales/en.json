@@ -85,6 +85,7 @@
     },
     "about": {
         "hero": {
+            "name": "IanHsu",
             "title": "Full-Stack Engineer（Java / Spring Boot × Vue 3）",
             "subtitle": "Skilled in designing scalable backend architectures and authorization systems using Spring Boot (JWT / RBAC / OAuth2), and building highly interactive front-end interfaces with Vue 3 + Pinia. Able to independently deliver end-to-end solutions—from database design and API development to deployment and front-end integration."
         },

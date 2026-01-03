@@ -85,6 +85,7 @@
     },
     "about": {
         "hero": {
+            "name": "徐啟益",
             "title": "全端工程師（Java / Spring Boot × Vue 3）",
             "subtitle": "擅長用 Spring Boot 設計可擴展的後端與權限系統（JWT / RBAC / OAuth2），前端以 Vue 3 + Pinia 打造高互動介面。可獨立完成從資料庫設計、API、部署到前端整合。"
         },

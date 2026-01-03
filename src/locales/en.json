@@ -4,12 +4,16 @@
         "highlight": "Reliable Systems",
         "description": "Hi, I'm 71BK. A Full-Stack Engineer focused on solving complex problems and delivering high-quality code for scalable applications.",
         "viewProjects": "View Projects",
-        "aboutMe": "About Me"
+        "aboutMe": "About Me",
+        "nameMain": "Full-Stack",
+        "nameSub": "Developer",
+        "location": "Based in Taipei, Taiwan"
     },
     "nav": {
         "work": "Work",
         "skills": "Skills",
         "about": "About",
+        "projects": "Projects",
         "contact": "Contact",
         "getInTouch": "Get in Touch"
     },
@@ -31,6 +35,10 @@
             }
         }
     },
+    "projects": {
+        "heroTitle": "Portfolio Work",
+        "clearFilters": "Clear Filters"
+    },
     "skills": {
         "title": "Core Technologies",
         "subtitle": "A comprehensive overview of my technical stack and development tools.",
@@ -45,5 +53,60 @@
     },
     "footer": {
         "copyright": "71BK © 2024"
-    }
+    },
+    "intro": {
+        "statement1": "I craft",
+        "digital": "digital",
+        "statement2": "experiences that",
+        "matter": "matter",
+        "description1": "Focused on building high-quality web applications, from frontend interaction experiences to backend system architecture, providing complete full-stack solutions.",
+        "description2": "Focused on creating meaningful digital products with clean code and thoughtful design.",
+        "viewWorks": "View Works"
+    },
+    "chat": {
+        "title": "AI Assistant",
+        "assistantName": "AI Assistant",
+        "status": "Online & Ready",
+        "today": "Today",
+        "userLabel": "You",
+        "placeholder": "Ask me anything...",
+        "disclaimer": "AI can make mistakes. Check important info.",
+        "intro": "Hello! I can recommend projects or answer questions about the portfolio.",
+        "resultsIntro": "Here are some projects that match your request.",
+        "noResults": "No matching projects yet. Try different keywords.",
+        "skillsAnswer": "Relevant skills include: {skills}",
+        "error": "Sorry, something went wrong. Please try again.",
+        "techLabel": "Tech",
+        "categoryLabel": "Category",
+        "linkLabel": "Link",
+        "typing": "AI is typing"
+    },
+    "about": {
+        "hero": {
+            "title": "Full-Stack Engineer（Java / Spring Boot × Vue 3）",
+            "subtitle": "Skilled in designing scalable backend architectures and authorization systems using Spring Boot (JWT / RBAC / OAuth2), and building highly interactive front-end interfaces with Vue 3 + Pinia. Able to independently deliver end-to-end solutions—from database design and API development to deployment and front-end integration."
+        },
+        "skills": {
+            "title": "Technical Skills"
+        },
+        "experience": {
+           "title": "Relevant Experience",
+            "entry1": {
+                "role": "Java Software Engineer Bootcamp",
+                "period": "2025/08 - 2025/12",
+                "achievement1": "Systematically studied Java, OOP, SQL, Web development, and Spring Boot; completed the capstone project and feature implementations",
+                "achievement2": "Built RESTful APIs and applied fundamental security concepts (JWT / basic access control), establishing a maintainable backend structure",
+                "achievement3": "Used Git / GitHub for version control and collaboration, and leveraged Docker to create a reproducible development environment"
+            },
+            "entry2": {
+                "role": "Fu Jen Catholic University",
+                "period": "2019 - 2024",
+                "achievement1": "Organized campus projects, course outcomes, event participation, and skill development into a one-page overview",
+                "achievement2": "Enhanced storytelling and visual design by presenting growth and key achievements through a timeline and card-based layout"
+            }
+        }
+    },
+     "contact": {
+        "title": "Scan the QR code to start interacting."
+        }
 }

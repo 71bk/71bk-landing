@@ -4,12 +4,16 @@
         "highlight": "可靠系統",
         "description": "嗨，我是 71BK。一位專注於解決複雜問題、為可擴展應用程式提供高品質程式碼的全端工程師。",
         "viewProjects": "查看作品",
-        "aboutMe": "關於我"
+        "aboutMe": "關於我",
+        "nameMain": "全端",
+        "nameSub": "開發者",
+        "location": "台北，台灣"
     },
     "nav": {
         "work": "作品",
         "skills": "技能",
         "about": "關於",
+        "projects": "作品集",
         "contact": "聯絡",
         "getInTouch": "聯繫我"
     },
@@ -31,6 +35,10 @@
             }
         }
     },
+    "projects": {
+        "heroTitle": "作品集",
+        "clearFilters": "清除篩選"
+    },
     "skills": {
         "title": "核心技術",
         "subtitle": "我的技術棧與開發工具概覽。",
@@ -45,5 +53,60 @@
     },
     "footer": {
         "copyright": "71BK © 2024"
-    }
+    },
+    "intro": {
+        "statement1": "我打造",
+        "digital": "數位",
+        "statement2": "有意義的",
+        "matter": "體驗",
+        "description1": "專注於打造高品質的網頁應用程式，從前端互動體驗到後端系統架構，提供完整的全端解決方案。",
+        "description2": "以乾淨的程式碼與細膩的設計，打造有意義的數位產品。",
+        "viewWorks": "查看作品"
+    },
+    "chat": {
+        "title": "AI 助手",
+        "assistantName": "AI 助手",
+        "status": "線上可用",
+        "today": "今天",
+        "userLabel": "你",
+        "placeholder": "想問什麼？",
+        "disclaimer": "AI 可能會出錯，重要資訊請再確認。",
+        "intro": "你好！我可以推薦作品或回答關於作品集的問題。",
+        "resultsIntro": "以下是符合你需求的作品：",
+        "noResults": "目前找不到符合的作品，試試看其他關鍵字。",
+        "skillsAnswer": "相關技能包括：{skills}",
+        "error": "抱歉，發生錯誤，請稍後再試。",
+        "techLabel": "技術",
+        "categoryLabel": "分類",
+        "linkLabel": "連結",
+        "typing": "AI 正在輸入"
+    },
+    "about": {
+        "hero": {
+            "title": "全端工程師（Java / Spring Boot × Vue 3）",
+            "subtitle": "擅長用 Spring Boot 設計可擴展的後端與權限系統（JWT / RBAC / OAuth2），前端以 Vue 3 + Pinia 打造高互動介面。可獨立完成從資料庫設計、API、部署到前端整合。"
+        },
+        "skills": {
+            "title": "技術能力"
+        },
+        "experience": {
+            "title": "相關經歷",
+            "entry1": {
+                "role": "Java 軟體工程師就業養成班",
+                "period": "2025/08 - 2025/12",
+                "achievement1": "系統化學習 Java、OOP、SQL、Web 與 Spring Boot，完成課程專題與功能實作",
+                "achievement2": "實作 RESTful API 與基本資安觀念（JWT / 權限控管基礎），建立可維護的後端結構",
+                "achievement3": "使用 Git / GitHub 進行版本控制與協作，搭配 Docker 建立可重現的開發環境"
+            },
+            "entry2": {
+                "role": "輔仁大學",
+                "period": "2019 - 2024",
+                "achievement1": "以「一頁式」整理校園專題、課程成果、活動參與與技能成長脈絡",
+                "achievement2": "強化敘事與視覺：用時間軸與卡片式排版呈現成長曲線與代表成果"
+            }
+        }
+    },
+    "contact": {
+        "title": "掃描 QR Code 即可開始互動。"
+        }
 }

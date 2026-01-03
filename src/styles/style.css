@@ -2,6 +2,7 @@
 @config "../../tailwind.config.js";
 @import "./theme-color.css";
 @import "./typography.css";
+@import "./admin.css";
 
 @layer base {
 

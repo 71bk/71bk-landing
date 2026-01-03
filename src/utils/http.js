@@ -12,6 +12,10 @@ const instance = axios.create({
   baseURL: apiBaseUrl,
   timeout: 10000,
   withCredentials: true, // 啟用 Cookie 傳送
+  headers: {
+    // 跳過 ngrok 的瀏覽器警告頁面，避免 403 Forbidden 錯誤
+    'ngrok-skip-browser-warning': 'true',
+  },
 });
 
 // 新增一個請求攔截器
@@ -58,29 +62,24 @@ instance.interceptors.response.use(
       }
 
       // 清除前端登入狀態
-      // 動態導入 userStore 以避免循環依賴
-      import('@/stores/user').then(({ useUserStore }) => {
-        const userStore = useUserStore();
+      // 動態導入 authStore 以避免循環依賴
+      import('@/store/auth').then(({ useAuthStore }) => {
+        const authStore = useAuthStore();
         // 清除使用者資訊（不呼叫後端 logout API，因為 Cookie 已失效）
-        userStore.userInfo = {
-          userId: null,
-          nickname: '',
-          email: '',
-          avatarUrl: '',
-          roles: []
-        };
-        userStore.cartQuantity = 0;
-        userStore.wishlistQuantity = 0;
-        userStore.notifyQuantity = 0;
+        authStore.user = null;
       }).catch(err => {
         console.warn('清除使用者狀態時發生錯誤:', err);
       });
+
+      // 檢查是否為公開頁面（登入頁、OAuth 回調頁等）
+      const publicPages = ['/admin/login', '/admin/oauth-callback', '/login'];
+      const isPublicPage = publicPages.some(page => window.location.pathname.startsWith(page));
 
       // 如果不是公開頁面，則導向登入頁
       if (!isPublicPage) {
         console.log("🔒 認證已過期，清除登入狀態並導向登入頁");
         router.push({
-          name: "login",
+          path: "/admin/login",
           query: { redirect: window.location.pathname + window.location.search },
         });
       }

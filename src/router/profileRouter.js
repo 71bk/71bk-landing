@@ -18,16 +18,21 @@ const profileRoutes = [
         name: "projects",
         component: () => import("@/views/profile/projects/ProjectsView.vue"),
       },
-      {
-        path: "projects/:slug",
-        name: "project-detail",
-        component: () => import("@/views/profile/projects/ProjectDetailView.vue"),
-      },
-      {
-        path: "privacy",
-        name: "privacy",
-        component: () => import("@/views/profile/legal/PrivacyView.vue"),
-      },
+    {
+      path: 'projects/:slug',
+      name: 'ProjectDetail',
+      component: () => import('@/views/profile/projects/ProjectDetailView.vue')
+    },
+    {
+      path: 'contact',
+      name: 'Contact',
+      component: () => import('@/views/profile/ContactView.vue')
+    },
+    {
+      path: 'privacy',
+      name: 'Privacy',
+      component: () => import('@/views/profile/legal/PrivacyView.vue')
+    },
       {
         path: "terms",
         name: "terms",

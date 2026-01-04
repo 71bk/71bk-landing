@@ -352,7 +352,7 @@ onUnmounted(() => {
 /* Responsive */
 @media (max-width: 768px) {
   .hanger {
-    bottom: 6rem;
+    bottom: 15rem;
     left: 1rem;
   }
   
@@ -382,6 +382,10 @@ onUnmounted(() => {
   
   .arrow-down {
     font-size: 1.25rem;
+  }
+  
+  .big-name {
+    bottom: 4rem;
   }
 }
 </style>

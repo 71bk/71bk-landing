@@ -41,6 +41,7 @@
           <tr>
             <th>時間</th>
             <th>事件類型</th>
+            <th>專案</th>
             <th>使用者</th>
             <th>狀態</th>
           </tr>
@@ -48,8 +49,18 @@
         <tbody>
           <tr v-for="event in recentEvents" :key="event.id">
             <td>{{ event.time }}</td>
-            <td>{{ event.eventType }}</td>
-            <td>{{ event.user }}</td>
+            <td>{{ getEventTypeText(event.eventType) }}</td>
+            <td>
+              <router-link
+                v-if="event.projectId"
+                :to="`/admin/projects/${event.projectId}`"
+                class="project-link"
+              >
+                {{ event.projectSlug || `#${event.projectId}` }}
+              </router-link>
+              <span v-else class="text-muted">-</span>
+            </td>
+            <td>{{ truncateUser(event.user) }}</td>
             <td>
               <span :class="['admin-badge', getBadgeClass(event.status)]">
                 {{ getStatusText(event.status) }}
@@ -135,6 +146,27 @@ const getStatusText = (status) => {
   }
   return textMap[status] || status
 }
+
+// Event type text helper
+const getEventTypeText = (eventType) => {
+  const typeMap = {
+    'PROJECT_CREATED': '專案建立',
+    'PROJECT_UPDATED': '專案更新',
+    'PROJECT_PUBLISHED': '專案發布',
+    'PROJECT_ARCHIVED': '專案封存',
+    'PROJECT_DELETED': '專案刪除'
+  }
+  return typeMap[eventType] || eventType
+}
+
+// Truncate user ID for display
+const truncateUser = (user) => {
+  if (!user) return '-'
+  if (user.length > 12) {
+    return user.substring(0, 10) + '...'
+  }
+  return user
+}
 </script>
 
 <style scoped>
@@ -164,5 +196,20 @@ const getStatusText = (status) => {
 /* Override card alignment for table section */
 .admin-card:has(.admin-table) {
   text-align: left;
+}
+
+/* Project link styling */
+.project-link {
+  color: rgb(var(--color-primary));
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}
+
+.text-muted {
+  color: rgb(var(--color-text-muted));
 }
 </style>

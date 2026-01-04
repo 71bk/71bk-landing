@@ -44,9 +44,29 @@ export const getProjectAnalytics = async (projectId, days = 7) => {
   return await http.get(`/admin/analytics/projects/${projectId}`, { params: { days } })
 }
 
+/**
+ * 取得流量趨勢（每日數據）
+ * @param {number} [days=7] - 統計天數
+ * @returns {Promise<Array>} 每日趨勢資料
+ */
+export const getTrend = async (days = 7) => {
+  return await http.get('/admin/analytics/trend', { params: { days } })
+}
+
+/**
+ * 取得裝置分佈
+ * @param {number} [days=7] - 統計天數
+ * @returns {Promise<Array>} 裝置分佈資料
+ */
+export const getDevices = async (days = 7) => {
+  return await http.get('/admin/analytics/devices', { params: { days } })
+}
+
 export default {
   getOverview,
   getTopProjects,
   getTopLinks,
-  getProjectAnalytics
+  getProjectAnalytics,
+  getTrend,
+  getDevices
 }

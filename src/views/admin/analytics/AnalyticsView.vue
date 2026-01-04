@@ -13,27 +13,23 @@
     <div class="admin-grid admin-grid-4 admin-mb-3">
       <div class="admin-card metric-card">
         <div class="metric-icon">📊</div>
-        <div class="metric-value">{{ metrics.totalPV.toLocaleString() }}</div>
-        <div class="metric-label">總頁面瀏覽</div>
-        <div class="metric-change positive">+12.5%</div>
+        <div class="metric-value">{{ metrics.pageViews.toLocaleString() }}</div>
+        <div class="metric-label">頁面瀏覽</div>
       </div>
       <div class="admin-card metric-card">
-        <div class="metric-icon">👥</div>
-        <div class="metric-value">{{ metrics.uniqueVisitors.toLocaleString() }}</div>
-        <div class="metric-label">獨立訪客</div>
-        <div class="metric-change positive">+8.3%</div>
+        <div class="metric-icon">📁</div>
+        <div class="metric-value">{{ metrics.projectViews.toLocaleString() }}</div>
+        <div class="metric-label">專案瀏覽</div>
       </div>
       <div class="admin-card metric-card">
-        <div class="metric-icon">📉</div>
-        <div class="metric-value">{{ metrics.bounceRate }}%</div>
-        <div class="metric-label">跳出率</div>
-        <div class="metric-change negative">+2.1%</div>
+        <div class="metric-icon">🔗</div>
+        <div class="metric-value">{{ metrics.linkClicks.toLocaleString() }}</div>
+        <div class="metric-label">連結點擊</div>
       </div>
       <div class="admin-card metric-card">
-        <div class="metric-icon">⏱️</div>
-        <div class="metric-value">{{ metrics.avgDuration }}</div>
-        <div class="metric-label">平均停留時間</div>
-        <div class="metric-change positive">+15s</div>
+        <div class="metric-icon">💬</div>
+        <div class="metric-value">{{ metrics.chatQueries.toLocaleString() }}</div>
+        <div class="metric-label">聊天查詢</div>
       </div>
     </div>
 
@@ -118,30 +114,20 @@ const isLoading = ref(false)
 const error = ref(null)
 
 const metrics = ref({
-  totalPV: 0,
-  uniqueVisitors: 0,
-  bounceRate: 0,
-  avgDuration: '0m 0s'
+  pageViews: 0,
+  projectViews: 0,
+  linkClicks: 0,
+  chatQueries: 0
 })
 
 const topProjects = ref([])
 const topLinks = ref([])
+const trendData = ref([])
+const devicesData = ref([])
 
-const defaultTopProjects = [
-  { title: 'Portfolio', views: 12580 },
-  { title: 'Admin Console', views: 8920 },
-  { title: 'LINE Bot', views: 6340 },
-  { title: 'API Service', views: 4250 },
-  { title: 'CLI Tools', views: 2180 }
-]
-
-const defaultTopLinks = [
-  { title: 'Live Demo', clicks: 640 },
-  { title: 'GitHub Repo', clicks: 520 },
-  { title: 'Docs', clicks: 410 },
-  { title: 'Figma', clicks: 280 },
-  { title: 'Notion', clicks: 190 }
-]
+// 當沒有資料時顯示的預設值（空陣列，會顯示無資料狀態）
+const defaultTopProjects = []
+const defaultTopLinks = []
 
 const toNumber = (value, fallback = 0) => {
   const parsed = Number(value)
@@ -155,24 +141,24 @@ const normalizeList = (payload) => {
 
 const applyOverview = (data = {}) => {
   metrics.value = {
-    totalPV: toNumber(data.totalPV ?? data.totalPageViews ?? data.totalViews ?? data.total_page_views, 0),
-    uniqueVisitors: toNumber(data.uniqueVisitors ?? data.totalVisitors ?? data.unique_visitors, 0),
-    bounceRate: toNumber(data.bounceRate ?? data.bounce_rate, 0),
-    avgDuration: String(data.avgDuration ?? data.avg_duration ?? '0m 0s')
+    pageViews: toNumber(data.pageViews ?? data.page_views, 0),
+    projectViews: toNumber(data.projectViews ?? data.project_views, 0),
+    linkClicks: toNumber(data.linkClicks ?? data.link_clicks, 0),
+    chatQueries: toNumber(data.chatQueries ?? data.chat_queries, 0)
   }
 }
 
 const mapTopProjects = (items) => {
   return normalizeList(items).map((item, index) => ({
-    title: item.title ?? item.projectTitle ?? item.name ?? item.slug ?? `Project ${index + 1}`,
-    views: toNumber(item.views ?? item.viewCount ?? item.count ?? item.total, 0)
+    title: item.titleZh ?? item.titleEn ?? item.title ?? item.slug ?? `Project ${index + 1}`,
+    views: toNumber(item.views ?? item.viewCount, 0)
   }))
 }
 
 const mapTopLinks = (items) => {
   return normalizeList(items).map((item, index) => ({
-    title: item.label ?? item.title ?? item.name ?? item.url ?? `Link ${index + 1}`,
-    clicks: toNumber(item.clicks ?? item.count ?? item.total ?? item.value, 0)
+    title: item.label ?? item.title ?? `Link ${index + 1}`,
+    clicks: toNumber(item.clicks ?? item.count, 0)
   }))
 }
 
@@ -182,19 +168,25 @@ const loadAnalytics = async () => {
   error.value = null
 
   try {
-    const [overviewData, topProjectsData, topLinksData] = await Promise.all([
+    const [overviewData, topProjectsData, topLinksData, trendDataRes, devicesDataRes] = await Promise.all([
       analyticsApi.getOverview(days),
       analyticsApi.getTopProjects(days, 5),
-      analyticsApi.getTopLinks(days, 5)
+      analyticsApi.getTopLinks(days, 5),
+      analyticsApi.getTrend(days),
+      analyticsApi.getDevices(days)
     ])
 
     applyOverview(overviewData ?? {})
     topProjects.value = mapTopProjects(topProjectsData)
     topLinks.value = mapTopLinks(topLinksData)
+    trendData.value = normalizeList(trendDataRes)
+    devicesData.value = normalizeList(devicesDataRes)
   } catch (err) {
     error.value = err?.message ?? 'Failed to load analytics'
     topProjects.value = []
     topLinks.value = []
+    trendData.value = []
+    devicesData.value = []
   } finally {
     isLoading.value = false
   }
@@ -208,8 +200,15 @@ watch(timeRange, () => {
   loadAnalytics()
 })
 
-// Generate date labels based on time range
+// Generate date labels from trend data or fallback to generated dates
 const dateLabels = computed(() => {
+  if (trendData.value.length > 0) {
+    return trendData.value.map(item => {
+      const date = new Date(item.date)
+      return `${date.getMonth() + 1}/${date.getDate()}`
+    })
+  }
+  // Fallback: generate date labels
   const days = parseInt(timeRange.value)
   const labels = []
   for (let i = days - 1; i >= 0; i--) {
@@ -221,75 +220,80 @@ const dateLabels = computed(() => {
 })
 
 // Traffic Trend Chart Option (Line Chart - Dual Axis)
-const trafficTrendOption = computed(() => ({
-  tooltip: {
-    trigger: 'axis',
-    backgroundColor: themeColors.surface,
-    borderColor: themeColors.muted,
-    textStyle: { color: '#e2e8f0' }
-  },
-  legend: {
-    data: ['Page Views', 'Visitors'],
-    textStyle: { color: '#94a3b8' },
-    top: 0
-  },
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
-  },
-  xAxis: {
-    type: 'category',
-    data: dateLabels.value,
-    axisLabel: { color: '#94a3b8' },
-    axisLine: { lineStyle: { color: '#475569' } }
-  },
-  yAxis: [
-    {
-      type: 'value',
-      name: 'PV',
-      axisLabel: { color: '#94a3b8' },
-      axisLine: { lineStyle: { color: '#475569' } },
-      splitLine: { lineStyle: { color: '#334155' } }
+const trafficTrendOption = computed(() => {
+  const pageViewsData = trendData.value.map(item => item.pageViews ?? 0)
+  const projectViewsData = trendData.value.map(item => item.projectViews ?? 0)
+  
+  return {
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: themeColors.surface,
+      borderColor: themeColors.muted,
+      textStyle: { color: '#e2e8f0' }
     },
-    {
-      type: 'value',
-      name: 'UV',
+    legend: {
+      data: ['頁面瀏覽', '專案瀏覽'],
+      textStyle: { color: '#94a3b8' },
+      top: 0
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      data: dateLabels.value,
       axisLabel: { color: '#94a3b8' },
-      axisLine: { lineStyle: { color: '#475569' } },
-      splitLine: { show: false }
-    }
-  ],
-  series: [
-    {
-      name: 'Page Views',
-      type: 'line',
-      smooth: true,
-      yAxisIndex: 0,
-      itemStyle: { color: themeColors.primary },
-      areaStyle: {
-        color: {
-          type: 'linear',
-          x: 0, y: 0, x2: 0, y2: 1,
-          colorStops: [
-            { offset: 0, color: 'rgba(99, 102, 241, 0.3)' },
-            { offset: 1, color: 'rgba(99, 102, 241, 0.05)' }
-          ]
-        }
+      axisLine: { lineStyle: { color: '#475569' } }
+    },
+    yAxis: [
+      {
+        type: 'value',
+        name: 'PV',
+        axisLabel: { color: '#94a3b8' },
+        axisLine: { lineStyle: { color: '#475569' } },
+        splitLine: { lineStyle: { color: '#334155' } }
       },
-      data: generateMockData(parseInt(timeRange.value), 800, 2000)
-    },
-    {
-      name: 'Visitors',
-      type: 'line',
-      smooth: true,
-      yAxisIndex: 1,
-      itemStyle: { color: themeColors.accent },
-      data: generateMockData(parseInt(timeRange.value), 200, 600)
-    }
-  ]
-}))
+      {
+        type: 'value',
+        name: '專案',
+        axisLabel: { color: '#94a3b8' },
+        axisLine: { lineStyle: { color: '#475569' } },
+        splitLine: { show: false }
+      }
+    ],
+    series: [
+      {
+        name: '頁面瀏覽',
+        type: 'line',
+        smooth: true,
+        yAxisIndex: 0,
+        itemStyle: { color: themeColors.primary },
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(99, 102, 241, 0.3)' },
+              { offset: 1, color: 'rgba(99, 102, 241, 0.05)' }
+            ]
+          }
+        },
+        data: pageViewsData
+      },
+      {
+        name: '專案瀏覽',
+        type: 'line',
+        smooth: true,
+        yAxisIndex: 1,
+        itemStyle: { color: themeColors.accent },
+        data: projectViewsData
+      }
+    ]
+  }
+})
 
 // Top Projects Chart Option (Horizontal Bar Chart)
 const topProjectsOption = computed(() => {
@@ -392,59 +396,64 @@ const topLinksOption = computed(() => {
 })
 
 // Device Distribution Chart Option (Pie Chart)
-const deviceDistributionOption = ref({
-  tooltip: {
-    trigger: 'item',
-    backgroundColor: themeColors.surface,
-    borderColor: themeColors.muted,
-    textStyle: { color: '#e2e8f0' },
-    formatter: '{b}: {c} ({d}%)'
-  },
-  legend: {
-    orient: 'vertical',
-    right: '5%',
-    top: 'center',
-    textStyle: { color: '#94a3b8' }
-  },
-  series: [
-    {
-      name: 'Device',
-      type: 'pie',
-      radius: ['45%', '70%'],
-      center: ['40%', '50%'],
-      avoidLabelOverlap: false,
-      itemStyle: {
-        borderRadius: 8,
-        borderColor: themeColors.background,
-        borderWidth: 2
-      },
-      label: { show: false },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: 16,
-          fontWeight: 'bold',
-          color: '#e2e8f0'
-        }
-      },
-      labelLine: { show: false },
-      data: [
-        { value: 18540, name: 'Desktop', itemStyle: { color: themeColors.primary } },
-        { value: 12350, name: 'Mobile', itemStyle: { color: themeColors.accent } },
-        { value: 2001, name: 'Tablet', itemStyle: { color: themeColors.secondary } }
-      ]
-    }
-  ]
+const deviceDistributionOption = computed(() => {
+  const deviceColors = {
+    'Desktop': themeColors.primary,
+    'Mobile': themeColors.accent,
+    'Tablet': themeColors.secondary
+  }
+  
+  const chartData = devicesData.value.length > 0
+    ? devicesData.value.map(item => ({
+        value: item.count ?? 0,
+        name: item.device ?? 'Unknown',
+        itemStyle: { color: deviceColors[item.device] || themeColors.muted }
+      }))
+    : []
+  
+  return {
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: themeColors.surface,
+      borderColor: themeColors.muted,
+      textStyle: { color: '#e2e8f0' },
+      formatter: '{b}: {c} ({d}%)'
+    },
+    legend: {
+      orient: 'vertical',
+      right: '5%',
+      top: 'center',
+      textStyle: { color: '#94a3b8' }
+    },
+    series: [
+      {
+        name: 'Device',
+        type: 'pie',
+        radius: ['45%', '70%'],
+        center: ['40%', '50%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 8,
+          borderColor: themeColors.background,
+          borderWidth: 2
+        },
+        label: { show: false },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: '#e2e8f0'
+          }
+        },
+        labelLine: { show: false },
+        data: chartData
+      }
+    ]
+  }
 })
 
-// Helper: Generate mock data
-function generateMockData(days, min, max) {
-  const data = []
-  for (let i = 0; i < days; i++) {
-    data.push(Math.floor(Math.random() * (max - min + 1)) + min)
-  }
-  return data
-}
+
 </script>
 
 <style scoped>

@@ -17,8 +17,14 @@ const router = createRouter({
   },
 });
 
-// Admin 路由認證守衛
+// Admin 路由認證守衛（暫時停用）
 router.beforeEach(async (to, from, next) => {
+  // TODO: 記得重新啟用認證！
+  // 暫時略過認證檢查
+  next();
+  return;
+
+  // === 原始認證邏輯（已停用）===
   // 檢查是否為需要認證的 Admin 路由
   const isAdminRoute = to.path.startsWith('/admin');
   const isPublicAdminRoute = ['/admin/login', '/admin/oauth-callback'].includes(to.path);

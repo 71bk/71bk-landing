@@ -90,7 +90,7 @@ const featuredProjects = computed(() => {
               <span
                 v-for="tech in project.techs"
                 :key="tech"
-                class="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-mono font-bold text-primary tracking-wider uppercase ring-1 ring-primary/20 shadow-sm max-w-24 truncate"
+                class="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-mono font-bold text-primary tracking-wider uppercase ring-1 ring-primary/20 shadow-sm max-w-24 overflow-hidden text-ellipsis whitespace-nowrap"
                 :title="tech"
               >
                 {{ tech }}

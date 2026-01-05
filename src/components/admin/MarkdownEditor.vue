@@ -4,8 +4,10 @@
  * 
  * 左側：Markdown 編輯區
  * 右側：即時預覽區（套用與前台相同的 prose 樣式）
+ * 
+ * 功能：同步滾動 - 編輯區與預覽區滾動同步
  */
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useMarkdown } from '@/composables/useMarkdown'
 
 const props = defineProps({
@@ -33,6 +35,42 @@ const content = computed({
 const renderedContent = computed(() => {
   return renderMarkdown(props.modelValue)
 })
+
+// === 同步滾動功能 ===
+const editorRef = ref(null)
+const previewRef = ref(null)
+let isScrolling = false // 防止滾動事件互相觸發
+
+// 計算滾動百分比
+const getScrollPercent = (element) => {
+  const scrollTop = element.scrollTop
+  const scrollHeight = element.scrollHeight - element.clientHeight
+  return scrollHeight > 0 ? scrollTop / scrollHeight : 0
+}
+
+// 設定滾動位置
+const setScrollPercent = (element, percent) => {
+  const scrollHeight = element.scrollHeight - element.clientHeight
+  element.scrollTop = scrollHeight * percent
+}
+
+// 編輯區滾動時同步預覽區
+const onEditorScroll = () => {
+  if (isScrolling || !previewRef.value) return
+  isScrolling = true
+  const percent = getScrollPercent(editorRef.value)
+  setScrollPercent(previewRef.value, percent)
+  requestAnimationFrame(() => { isScrolling = false })
+}
+
+// 預覽區滾動時同步編輯區
+const onPreviewScroll = () => {
+  if (isScrolling || !editorRef.value) return
+  isScrolling = true
+  const percent = getScrollPercent(previewRef.value)
+  setScrollPercent(editorRef.value, percent)
+  requestAnimationFrame(() => { isScrolling = false })
+}
 </script>
 
 <template>
@@ -44,10 +82,12 @@ const renderedContent = computed(() => {
         <span class="editor-header-title">編輯 (Markdown)</span>
       </div>
       <textarea 
+        ref="editorRef"
         v-model="content"
         :placeholder="placeholder"
         class="editor-textarea"
         spellcheck="false"
+        @scroll="onEditorScroll"
       ></textarea>
     </div>
     
@@ -57,7 +97,11 @@ const renderedContent = computed(() => {
         <span class="editor-header-icon">👁️</span>
         <span class="editor-header-title">預覽</span>
       </div>
-      <div class="preview-content-wrapper">
+      <div 
+        ref="previewRef"
+        class="preview-content-wrapper"
+        @scroll="onPreviewScroll"
+      >
         <!-- 
           套用與前台 ProjectDetailContent 完全相同的 prose 樣式
           確保後台預覽 = 前台呈現

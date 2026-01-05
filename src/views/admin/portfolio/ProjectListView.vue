@@ -379,6 +379,7 @@ const handleDelete = async (project) => {
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: 9999px;
+  white-space: nowrap;
 }
 
 .status-dot {

@@ -84,7 +84,7 @@ const featuredProjects = computed(() => {
                 :alt="project.title"
                 class="absolute inset-0 w-full h-full object-cover"
               />
-              <div v-else class="absolute inset-0 bg-[radial-gradient(rgb(var(--color-border))_1px,transparent_1px)] [background-size:16px_16px] opacity-50"></div>
+              <div v-else class="absolute inset-0 bg-[radial-gradient(rgb(var(--color-border))_1px,transparent_1px)] bg-size-[16px_16px] opacity-50"></div>
             </template>
             <template #tags>
               <span

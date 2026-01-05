@@ -17,11 +17,62 @@ onMounted(() => {
   // 技能卡片依序進場
   staggerIn(skillsGrid, '.skill-card', { y: 60, stagger: 0.12, start: 'top 95%' })
 })
+
+// 技能數據結構化，方便維護
+const skillCategories = [
+  {
+    key: 'frontend',
+    icon: 'web',
+    color: 'from-violet-500 to-purple-600',
+    skills: [
+      { name: 'React', icon: 'react' },
+      { name: 'Vue 3 & Vite', icon: 'vue' },
+      { name: 'Tailwind CSS', icon: 'tailwind' },
+      { name: 'JavaScript', icon: 'javascript' },
+      { name: 'TypeScript', icon: 'typescript' }
+    ]
+  },
+  {
+    key: 'backend',
+    icon: 'dns',
+    color: 'from-blue-500 to-cyan-600',
+    skills: [
+      { name: 'Java', icon: 'java' },
+      { name: 'Spring Boot', icon: 'spring' },
+      { name: 'Spring Security', icon: 'spring' },
+      { name: 'JWT & OAuth2', icon: 'lock' },
+      { name: 'RESTful APIs', icon: 'api' }
+    ]
+  },
+  {
+    key: 'devops',
+    icon: 'cloud_sync',
+    color: 'from-emerald-500 to-teal-600',
+    skills: [
+      { name: 'GitHub & Git', icon: 'github' },
+      { name: 'Docker', icon: 'docker' },
+      { name: 'Cloudflare', icon: 'cloudflare' },
+      { name: 'AWS & Vercel', icon: 'aws' },
+      { name: 'MySQL & SQLServer', icon: 'database' },
+      { name: 'CI/CD Pipelines', icon: 'cicd' }
+    ]
+  }
+]
 </script>
 
 <template>
-  <section class="py-24 bg-background" id="skills">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+  <!-- 加入淡淡背景裝飾 -->
+  <section class="py-24 relative overflow-hidden" id="skills">
+    <!-- 背景裝飾：淡淡的程式碼符號和圓點 -->
+    <div class="absolute inset-0 bg-gradient-to-b from-background via-primary/[0.02] to-background"></div>
+    <div class="absolute inset-0 opacity-[0.03]">
+      <div class="absolute top-20 left-10 text-8xl font-mono text-primary select-none">&lt;/&gt;</div>
+      <div class="absolute top-40 right-20 text-7xl font-mono text-primary select-none">{ }</div>
+      <div class="absolute bottom-32 left-1/4 text-6xl font-mono text-primary select-none">//</div>
+      <div class="absolute bottom-20 right-1/3 text-8xl font-mono text-primary select-none">( )</div>
+    </div>
+    
+    <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
       <!-- Header -->
       <div ref="sectionHeader" class="mx-auto max-w-2xl lg:text-center mb-16 opacity-0">
         <h2 class="text-3xl font-bold tracking-tight text-main sm:text-4xl">{{ t('skills.title') }}</h2>
@@ -32,104 +83,109 @@ onMounted(() => {
 
       <!-- Skills Grid -->
       <div ref="skillsGrid" class="grid grid-cols-1 gap-8 md:grid-cols-3">
-        <!-- Frontend -->
-        <div class="skill-card rounded-2xl bg-surface p-8 shadow-sm ring-1 ring-border/60 hover:shadow-lg hover:ring-primary/30 transition-all duration-300">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <span class="material-symbols-outlined">web</span>
+        <div 
+          v-for="category in skillCategories" 
+          :key="category.key"
+          class="skill-card group rounded-2xl bg-surface p-8 shadow-md ring-1 ring-border/60 hover:shadow-xl hover:-translate-y-1 hover:ring-primary/40 transition-all duration-300"
+        >
+          <!-- 標題區域：漸層背景強調 -->
+          <div class="flex items-center gap-4 mb-6">
+            <div :class="['flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br shadow-lg', category.color]">
+              <span class="material-symbols-outlined text-white text-xl">{{ category.icon }}</span>
             </div>
-            <h3 class="text-lg font-semibold text-main">
-              <span class="text-primary/40 font-mono mr-1 font-normal"></span>{{ t('skills.frontend') }}
+            <h3 class="text-xl font-bold text-main">
+              {{ t(`skills.${category.key}`) }}
             </h3>
           </div>
-          <ul class="space-y-4">
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">React</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">Vue 3 &amp; Vite</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">Tailwind CSS</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">JavaScript</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">TypeScript</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Backend -->
-        <div class="skill-card rounded-2xl bg-surface p-8 shadow-sm ring-1 ring-border/60 hover:shadow-lg hover:ring-primary/30 transition-all duration-300">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <span class="material-symbols-outlined">dns</span>
-            </div>
-            <h3 class="text-lg font-semibold text-main">{{ t('skills.backend') }}</h3>
-          </div>
-          <ul class="space-y-4">
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">java</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">Spring Boot</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">Spring Security</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">JWT &amp; OAuth2</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">Restful APIs</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- DevOps -->
-        <div class="skill-card rounded-2xl bg-surface p-8 shadow-sm ring-1 ring-border/60 hover:shadow-lg hover:ring-primary/30 transition-all duration-300">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <span class="material-symbols-outlined">cloud_sync</span>
-            </div>
-            <h3 class="text-lg font-semibold text-main">{{ t('skills.devops') }}</h3>
-          </div>
-          <ul class="space-y-4">
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">GitHub &amp; Git</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">Docker</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">Cloudflare</span>
-            </li>
-                        <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">AWS &amp; Vercel</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">SQLServer &amp; MySQL</span>
-            </li>
-            <li class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item">
-              <span class="material-symbols-outlined text-xl text-primary/60 group-hover/item:text-primary transition-colors">check_circle</span>
-              <span class="text-sm font-mono font-medium tracking-wide">CI/CD Pipelines</span>
+          
+          <!-- 技能列表：使用技術 Logo -->
+          <ul class="space-y-3">
+            <li 
+              v-for="skill in category.skills" 
+              :key="skill.name"
+              class="flex items-center gap-3 text-muted hover:text-main transition-colors group/item p-2 rounded-lg hover:bg-primary/5"
+            >
+              <!-- 技術 Logo SVG -->
+              <div class="w-6 h-6 flex items-center justify-center flex-shrink-0">
+                <!-- Vue -->
+                <svg v-if="skill.icon === 'vue'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path fill="#42b883" d="M78.8,10L64,35.4L49.2,10H0l64,110l64-110H78.8z"/>
+                  <path fill="#35495e" d="M78.8,10L64,35.4L49.2,10H25.6L64,76l38.4-66H78.8z"/>
+                </svg>
+                <!-- React -->
+                <svg v-else-if="skill.icon === 'react'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <g fill="#61DAFB">
+                    <circle cx="64" cy="64" r="11.4"/>
+                    <path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13.2-.2-22.5-6.6-26.1-1.9-1.1-4-1.6-6.4-1.6-7 0-15.9 5.2-24.9 13.9-9-8.7-17.9-13.9-24.9-13.9-2.4 0-4.5.5-6.4 1.6-6.4 3.7-8.7 13-6.6 26.1.4 2.3.9 4.7 1.5 7.1-2.4.7-4.7 1.4-6.9 2.3C8.2 50 1.4 56.6 1.4 64s6.9 14 19.3 18.8c2.2.8 4.5 1.6 6.9 2.3-.6 2.4-1.1 4.8-1.5 7.1-2.1 13.2.2 22.5 6.6 26.1 1.9 1.1 4 1.6 6.4 1.6 7.1 0 16-5.2 24.9-13.9 9 8.7 17.9 13.9 24.9 13.9 2.4 0 4.5-.5 6.4-1.6 6.4-3.7 8.7-13 6.6-26.1-.4-2.3-.9-4.7-1.5-7.1 2.4-.7 4.7-1.4 6.9-2.3 12.5-4.8 19.3-11.4 19.3-18.8s-6.8-14-19.3-18.8zM92.5 14.7c4.1 2.4 5.5 9.8 3.8 20.3-.3 2.1-.8 4.3-1.4 6.6-5.2-1.2-10.7-2-16.5-2.5-3.4-4.8-6.9-9.1-10.4-13 7.4-7.3 14.9-12.3 21-12.3 1.3 0 2.5.3 3.5.9zM81.3 74c-1.8 3.2-3.9 6.4-6.1 9.6-3.7.3-7.4.4-11.2.4-3.9 0-7.6-.1-11.2-.4-2.2-3.2-4.2-6.4-6-9.6-1.9-3.3-3.7-6.7-5.3-10 1.6-3.3 3.4-6.7 5.3-10 1.8-3.2 3.9-6.4 6.1-9.6 3.7-.3 7.4-.4 11.2-.4 3.9 0 7.6.1 11.2.4 2.2 3.2 4.2 6.4 6 9.6 1.9 3.3 3.7 6.7 5.3 10-1.7 3.3-3.4 6.6-5.3 10zm8.3-3.3c1.5 3.5 2.7 6.9 3.8 10.3-3.4.8-7 1.4-10.8 1.9 1.2-1.9 2.5-3.9 3.6-6 1.2-2.1 2.3-4.2 3.4-6.2zM64 97.8c-2.4-2.6-4.7-5.4-6.9-8.3 2.3.1 4.6.2 6.9.2 2.3 0 4.6-.1 6.9-.2-2.2 2.9-4.5 5.7-6.9 8.3zm-18.6-15c-3.8-.5-7.4-1.1-10.8-1.9 1.1-3.3 2.3-6.8 3.8-10.3 1.1 2 2.2 4.1 3.4 6.1 1.2 2.2 2.4 4.1 3.6 6.1zm-7-25.5c-1.5-3.5-2.7-6.9-3.8-10.3 3.4-.8 7-1.4 10.8-1.9-1.2 1.9-2.5 3.9-3.6 6-1.2 2.1-2.3 4.2-3.4 6.2zM64 30.2c2.4 2.6 4.7 5.4 6.9 8.3-2.3-.1-4.6-.2-6.9-.2-2.3 0-4.6.1-6.9.2 2.2-2.9 4.5-5.7 6.9-8.3zm22.2 21l-3.6-6c3.8.5 7.4 1.1 10.8 1.9-1.1 3.3-2.3 6.8-3.8 10.3-1.1-2.1-2.2-4.2-3.4-6.2zM33.3 35.1c-1.7-10.5-.3-17.9 3.8-20.3 1-.6 2.2-.9 3.5-.9 6 0 13.5 4.9 21 12.3-3.5 3.8-7 8.2-10.4 13-5.8.5-11.3 1.4-16.5 2.5-.6-2.3-1-4.5-1.4-6.6zM6.4 64c0-4.7 5.7-9.7 15.7-13.4 2-.8 4.2-1.5 6.4-2.1 1.6 5 3.6 10.3 6 15.6-2.4 5.3-4.5 10.5-6 15.5C15.3 75.6 6.4 69.6 6.4 64zm27.5 34.4c-4.1-2.4-5.5-9.8-3.8-20.3.3-2.1.8-4.3 1.4-6.6 5.2 1.2 10.7 2 16.5 2.5 3.4 4.8 6.9 9.1 10.4 13-7.4 7.3-14.9 12.3-21 12.3-1.3 0-2.5-.3-3.5-.9zM96.3 93c1.7 10.5.3 17.9-3.8 20.3-1 .6-2.2.9-3.5.9-6 0-13.5-4.9-21-12.3 3.5-3.8 7-8.2 10.4-13 5.8-.5 11.3-1.4 16.5-2.5.6 2.3 1 4.5 1.4 6.6zm9.9-30.6c-2 .8-4.2 1.5-6.4 2.1-1.6-5-3.6-10.3-6-15.6 2.4-5.3 4.5-10.5 6-15.5 13.8 4 22.7 10 22.7 15.6 0 4.7-5.8 9.7-16.3 13.4z"/>
+                  </g>
+                </svg>
+                <!-- Tailwind -->
+                <svg v-else-if="skill.icon === 'tailwind'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path d="M64.004 25.602c-17.067 0-27.73 8.53-32 25.597 6.398-8.531 13.867-11.73 22.398-9.597 4.871 1.214 8.352 4.746 12.207 8.66C72.883 56.629 80.145 64 96.004 64c17.066 0 27.73-8.531 32-25.602-6.399 8.536-13.867 11.735-22.399 9.602-4.87-1.215-8.347-4.746-12.207-8.66-6.27-6.367-13.53-13.738-29.394-13.738zM32.004 64c-17.066 0-27.73 8.531-32 25.602C6.402 81.066 13.87 77.867 22.402 80c4.871 1.215 8.352 4.746 12.207 8.66 6.274 6.367 13.536 13.738 29.395 13.738 17.066 0 27.73-8.53 32-25.597-6.399 8.531-13.867 11.73-22.399 9.597-4.87-1.214-8.347-4.746-12.207-8.66C55.128 71.371 47.868 64 32.004 64z" fill="#06B6D4"/>
+                </svg>
+                <!-- JavaScript -->
+                <svg v-else-if="skill.icon === 'javascript'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path fill="#F7DF1E" d="M2 2h124v124H2z"/>
+                  <path d="M89.4 102.8c3.3 5.4 7.6 9.4 15.2 9.4 6.4 0 10.5-3.2 10.5-7.6 0-5.3-4.2-7.1-11.2-10.2l-3.9-1.7c-11.1-4.7-18.5-10.6-18.5-23.1 0-11.5 8.8-20.2 22.5-20.2 9.8 0 16.8 3.4 21.9 12.3l-12 7.7c-2.6-4.7-5.5-6.6-9.9-6.6-4.5 0-7.4 2.9-7.4 6.6 0 4.6 2.9 6.5 9.6 9.4l3.9 1.7c13.1 5.6 20.5 11.3 20.5 24.2 0 13.8-10.9 21.4-25.5 21.4-14.3 0-23.5-6.8-28-15.7l12.3-7.6zM52.3 103.4c2.5 4.4 4.7 8.1 10.1 8.1 5.2 0 8.4-2 8.4-9.7V52.4h15.1v49.7c0 16-9.4 23.3-23.1 23.3-12.4 0-19.6-6.4-23.3-14.1l12.8-7.9z"/>
+                </svg>
+                <!-- TypeScript -->
+                <svg v-else-if="skill.icon === 'typescript'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path fill="#3178C6" d="M2 63.91v62.5h125v-125H2zm100.73-5a15.56 15.56 0 017.82 4.5 20.58 20.58 0 013 4c0 .16-5.4 3.81-8.69 5.85-.12.08-.6-.44-1.13-1.23a7.09 7.09 0 00-5.87-3.53c-3.79-.26-6.23 1.73-6.21 5a4.58 4.58 0 00.54 2.34c.83 1.73 2.38 2.76 7.24 4.86 8.95 3.85 12.78 6.39 15.16 10 2.66 4 3.25 10.46 1.45 15.24-2 5.2-6.9 8.73-13.83 9.9a38.32 38.32 0 01-9.52-.1A23.91 23.91 0 0177.12 108c-1.08-.7-3.21-2.38-3.32-2.64a9.7 9.7 0 011.64-1.11l5.37-3.09 4.16-2.39.88 1.27a12.88 12.88 0 004.53 4.06 13.32 13.32 0 0010.9.1 7.24 7.24 0 001.33-1.08 4.4 4.4 0 00.67-5.38c-.94-1.57-2.87-2.87-8.28-5.55-6.17-3.06-8.83-4.95-11.06-7.84a16.5 16.5 0 01-2.79-7.95 32.09 32.09 0 01.3-7.27c1.55-6.08 6.05-10.29 12.51-11.7a35.52 35.52 0 0111.64.61zM73.1 63.33l.01 5.34H57.6v45.7h-13V68.67H29.1v-5.24c0-2.87.07-5.29.17-5.37s10-0.1 22-.08l21.84.06z"/>
+                </svg>
+                <!-- Java -->
+                <svg v-else-if="skill.icon === 'java'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path fill="#0074BD" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969zm-2.988-13.665s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z"/>
+                  <path fill="#EA2D2E" d="M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 .001-42.731 10.67-22.324 34.187z"/>
+                  <path fill="#0074BD" d="M102.123 108.229s3.529 2.91-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.896-9.468zM49.912 70.294s-22.686 5.389-8.033 7.348c6.188.828 18.518.638 30.011-.326 9.39-.789 18.813-2.474 18.813-2.474s-3.308 1.419-5.704 3.053c-23.042 6.061-67.544 3.238-54.731-2.958 10.832-5.239 19.644-4.643 19.644-4.643zm40.697 22.747c23.421-12.167 12.591-23.86 5.032-22.285-1.848.385-2.677.72-2.677.72s.688-1.079 2-1.543c14.953-5.255 26.451 15.503-4.823 23.725 0-.002.359-.327.468-.617z"/>
+                  <path fill="#EA2D2E" d="M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587z"/>
+                  <path fill="#0074BD" d="M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331z"/>
+                </svg>
+                <!-- Spring -->
+                <svg v-else-if="skill.icon === 'spring'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path fill="#68bd45" d="M116.452 6.643a59.104 59.104 0 01-6.837 12.136A64.249 64.249 0 0064.205-.026C28.984-.026 0 28.958 0 64.179a64.27 64.27 0 0019.252 45.913c.318.318.592.654.92.972a2.81 2.81 0 003.58.092c9.42-7.81 18.522-15.968 27.405-24.393 14.47-13.731 28.195-28.192 41.176-43.372 10.294-12.027 19.816-24.7 28.195-38.191.528-.846 1.024-1.696 1.505-2.577a60.455 60.455 0 00-5.58 4.02zm-45.253 45.253l-1.95 1.796a174.08 174.08 0 01-14.51 12.456c-1.08.83-2.186 1.633-3.28 2.437a96.427 96.427 0 01-5.892 4.083c-1.88 1.194-3.81 2.316-5.773 3.39a59.99 59.99 0 01-6.2 3.007 44.236 44.236 0 01-6.47 2.21 29.07 29.07 0 01-6.648.966 16.715 16.715 0 01-6.546-1.08 10.538 10.538 0 01-5.14-4.296 12.288 12.288 0 01-1.828-6.137 16.62 16.62 0 01.945-6.182 30.073 30.073 0 012.9-5.965 48.169 48.169 0 014.372-5.767 72.56 72.56 0 015.333-5.423c1.837-1.701 3.738-3.337 5.685-4.915a118.694 118.694 0 015.915-4.416 164.52 164.52 0 015.987-4.007 191.17 191.17 0 015.966-3.695 212.31 212.31 0 015.881-3.423A218.72 218.72 0 0163.8 25.08c1.887-1.01 3.788-1.984 5.696-2.927a178.37 178.37 0 015.674-2.669c1.84-.818 3.698-1.593 5.565-2.322 1.82-.712 3.658-1.38 5.507-2 1.794-.6 3.605-1.152 5.423-1.654a96.545 96.545 0 015.336-1.298 69.43 69.43 0 015.206-.914 42.735 42.735 0 015.02-.42 22.098 22.098 0 014.775.334c1.439.264 2.81.716 4.097 1.341a9.88 9.88 0 013.347 2.594 8.143 8.143 0 011.773 3.794 10.015 10.015 0 01-.08 3.998 14.62 14.62 0 01-1.255 3.727 24.093 24.093 0 01-2.167 3.538 35.11 35.11 0 01-2.738 3.287 52.26 52.26 0 01-3.088 3.015 73.94 73.94 0 01-3.32 2.753c-1.168.905-2.36 1.776-3.566 2.625a145.92 145.92 0 01-3.656 2.515 179.47 179.47 0 01-3.72 2.388c-1.239.77-2.49 1.525-3.744 2.266l-1.885 1.097z"/>
+                </svg>
+                <!-- Lock (OAuth) -->
+                <svg v-else-if="skill.icon === 'lock'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5 text-primary">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0110 0v4"/>
+                </svg>
+                <!-- API -->
+                <svg v-else-if="skill.icon === 'api'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5 text-primary">
+                  <path d="M4 17l6-6-6-6M12 19h8"/>
+                </svg>
+                <!-- GitHub -->
+                <svg v-else-if="skill.icon === 'github'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <g fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"/><path d="M26.484 91.806c-.133.3-.605.39-1.035.185-.44-.196-.685-.605-.543-.906.13-.31.603-.395 1.04-.188.44.197.69.61.537.91zm2.446 2.729c-.287.267-.85.143-1.232-.28-.396-.42-.47-.983-.177-1.254.298-.266.844-.14 1.24.28.394.426.472.984.17 1.255zM31.312 98.012c-.37.258-.976.017-1.35-.52-.37-.538-.37-1.183.01-1.44.373-.258.97-.025 1.35.507.368.545.368 1.19-.01 1.452zm3.261 3.361c-.33.365-1.036.267-1.552-.23-.527-.487-.674-1.18-.343-1.544.336-.366 1.045-.264 1.564.23.527.486.686 1.18.333 1.543zm4.5 1.951c-.147.473-.825.688-1.51.486-.683-.207-1.13-.76-.99-1.238.14-.477.823-.7 1.512-.485.683.206 1.13.756.988 1.237zm4.943.361c.017.498-.563.91-1.28.92-.723.017-1.308-.387-1.315-.877 0-.503.568-.91 1.29-.924.717-.013 1.306.387 1.306.88zm4.598-.782c.086.485-.413.984-1.126 1.117-.7.13-1.35-.172-1.44-.653-.086-.498.422-.997 1.122-1.126.714-.123 1.354.17 1.444.663zm0 0"/></g>
+                </svg>
+                <!-- Docker -->
+                <svg v-else-if="skill.icon === 'docker'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path fill-rule="evenodd" clip-rule="evenodd" fill="#3A4D54" d="M73.8 50.8h11.3v11.4H73.8zM60.6 50.8h11.3v11.4H60.6zM47.4 50.8h11.3v11.4H47.4zM34.2 50.8h11.3v11.4H34.2zM21 50.8h11.3v11.4H21zM34.2 38.3h11.3v11.4H34.2zM47.4 38.3h11.3v11.4H47.4zM60.6 38.3h11.3v11.4H60.6zM47.4 25.8h11.3v11.4H47.4zM125.8 56.6c-2.3-1.5-7.6-2.1-11.6-1.3-.5-3.7-2.6-7-6.4-9.9l-2.2-1.5-1.5 2.2c-1.9 2.9-3 6.9-2.7 10.6.2 1.4.6 3.9 2.1 6.1-1.5.8-4.4 1.9-8.3 1.9H.8l-.3 1.7c-.8 5.3-.5 21.8 10 34.5 7.9 9.6 19.7 14.5 35.1 14.5 33.4 0 58.1-15.4 69.7-43.4 4.6.1 14.4 0 19.4-9.6l1-1.8-1.9-1.3zm-95 13.3H19.5v11.4h11.3V69.9zm0 0"/>
+                  <path fill="#00AADA" d="M21 62.2h11.3v11.4H21zM34.2 62.2h11.3v11.4H34.2zM47.4 62.2h11.3v11.4H47.4zM60.6 62.2h11.3v11.4H60.6zM73.8 62.2h11.3v11.4H73.8z"/>
+                </svg>
+                <!-- Cloudflare -->
+                <svg v-else-if="skill.icon === 'cloudflare'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path fill="#F4A83D" d="M99.4 81.7l-2.6-8.7c-.2-.6-.2-1.2.1-1.7.3-.5.7-.9 1.3-1.1l23.1-8.6c.7-.2 1.1-.9.9-1.6-.1-.6-.6-1-1.2-1H67.5c-.3 0-.6.1-.8.2-3.7 2.2-6.2 5.6-7.1 9.6l-1.7 7.8c-.3 1.4-.1 2.8.5 4.1.6 1.2 1.6 2.2 2.9 2.7 1.3.5 2.7.5 4.1.1l33.3-1.3c.2 0 .4-.1.5-.2.2-.3.2-.7.2-1.3z"/>
+                  <path fill="#FAAE40" d="M80.1 81.7l-1.7-5.8c-.2-.8-.2-1.6.2-2.3s.9-1.2 1.7-1.4l14.7-5.5c.9-.3 1.4-1.2 1.2-2.1-.2-.8-.9-1.3-1.5-1.3H45.5c-.4 0-.8.1-1 .3-4.8 2.9-8 7.3-9.1 12.4l-2.1 10.1c-.4 1.8-.1 3.7.7 5.3s2 2.9 3.7 3.5c1.7.7 3.5.7 5.3.1l35.6-1.7c.3 0 .5-.1.7-.3.3-.4.3-1 .3-1.8-.2-.9-.7-1.6-1.3-2.1l-2.2-7.4z"/>
+                </svg>
+                <!-- AWS -->
+                <svg v-else-if="skill.icon === 'aws'" viewBox="0 0 128 128" class="w-5 h-5">
+                  <path fill="#F7A80D" d="M38.089 77.466l-11.4 4.896 10.559 4.514 12.241-4.514-11.4-4.896zm-14.237-6.139l-12.722 5.639 12.722 5.502 11.679-5.502-11.679-5.639zm28.474 0l-12.721 5.639 12.721 5.502 11.68-5.502-11.68-5.639zM64 77.466l-12.245 4.896 12.245 5.45 12.245-5.45L64 77.466zm-13.76-6.139l-11.68 5.639 11.68 5.502L64 76.966l-13.76-5.639zm27.519 0l-11.68 5.639 11.68 5.502 11.68-5.502-11.68-5.639zm13.76-6.139l-12.721 5.639 12.721 5.502 11.679-5.502-11.679-5.639zm-41.279 0l-12.721 5.639 12.721 5.502 11.68-5.502-11.68-5.639z"/>
+                  <path fill="#F7A80D" d="M89.911 77.466l-11.4 4.896 10.559 4.514 12.241-4.514-11.4-4.896zm14.237-6.139l-12.722 5.639 12.722 5.502 11.679-5.502-11.679-5.639z"/>
+                </svg>
+                <!-- Database -->
+                <svg v-else-if="skill.icon === 'database'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5 text-primary">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                </svg>
+                <!-- CI/CD -->
+                <svg v-else-if="skill.icon === 'cicd'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5 text-primary">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                </svg>
+                <!-- Fallback -->
+                <span v-else class="material-symbols-outlined text-lg text-primary">check_circle</span>
+              </div>
+              <span class="text-sm font-medium tracking-wide">{{ skill.name }}</span>
             </li>
           </ul>
         </div>

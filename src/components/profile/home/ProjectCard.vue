@@ -13,7 +13,7 @@ defineProps({
 
 <template>
   <article
-    class="group relative flex h-full flex-col overflow-hidden rounded-xl bg-surface shadow-sm ring-1 ring-border/60 transition-all hover:-translate-y-1 hover:shadow-md"
+    class="group relative flex h-full flex-col overflow-hidden rounded-xl bg-surface shadow-md ring-1 ring-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:ring-primary/40"
   >
     <div class="aspect-video w-full overflow-hidden bg-background relative">
       <slot name="media" />

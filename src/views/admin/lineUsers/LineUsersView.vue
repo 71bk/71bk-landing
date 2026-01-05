@@ -114,8 +114,11 @@ const loadUsers = async () => {
     error.value = null
     const response = await lineApi.getUsers()
     
-    // Handle paginated response
-    if (response.content) {
+    // Handle paginated response (backend uses 'items' instead of 'content')
+    if (response.items) {
+      users.value = response.items
+      totalUsers.value = response.totalElements || response.items.length
+    } else if (response.content) {
       users.value = response.content
       totalUsers.value = response.totalElements || response.content.length
     } else if (Array.isArray(response)) {

@@ -50,7 +50,8 @@ const extraTechsCount = computed(() => {
         <span 
           v-for="(tech, index) in visibleTechs" 
           :key="`${project.title}-${tech}-${index}`"
-          class="text-xs text-primary font-mono font-bold tracking-wider uppercase bg-primary/10 px-3 py-1 rounded shadow-sm border border-primary/10"
+          class="text-xs text-primary font-mono font-bold tracking-wider uppercase bg-primary/10 px-3 py-1 rounded shadow-sm border border-primary/10 max-w-24 truncate"
+          :title="tech"
         >
           {{ tech }}
         </span>

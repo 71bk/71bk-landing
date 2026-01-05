@@ -38,18 +38,24 @@ const getCategoryLabel = (categoryValue) => {
 }
 
 // 取得精選作品（最多 3 個）
+const MAX_VISIBLE_TECHS = 4
+
 const featuredProjects = computed(() => {
   return featuredProjectsRaw.value
     .slice(0, 3)
-    .map((project) => ({
-      id: project.id,
-      slug: project.slug,
-      title: project.title,
-      summary: project.summary,
-      category: getCategoryLabel(project.category),
-      coverImage: project.coverImage,
-      techs: project.techs?.map((tech) => tech.name) ?? []
-    }))
+    .map((project) => {
+      const allTechs = project.techs?.map((tech) => tech.name) ?? []
+      return {
+        id: project.id,
+        slug: project.slug,
+        title: project.title,
+        summary: project.summary,
+        category: getCategoryLabel(project.category),
+        coverImage: project.coverImage,
+        techs: allTechs.slice(0, MAX_VISIBLE_TECHS),
+        extraTechsCount: Math.max(0, allTechs.length - MAX_VISIBLE_TECHS)
+      }
+    })
 })
 </script>
 
@@ -87,6 +93,12 @@ const featuredProjects = computed(() => {
                 class="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-mono font-bold text-primary tracking-wider uppercase ring-1 ring-primary/20 shadow-sm"
               >
                 {{ tech }}
+              </span>
+              <span
+                v-if="project.extraTechsCount > 0"
+                class="inline-flex items-center rounded-full bg-surface px-3 py-1 text-xs font-mono font-medium text-muted ring-1 ring-border"
+              >
+                +{{ project.extraTechsCount }}
               </span>
             </template>
           </ProjectCard>

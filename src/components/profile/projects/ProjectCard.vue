@@ -1,10 +1,23 @@
 ﻿<script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   project: {
     type: Object,
     required: true,
   },
 });
+
+const MAX_VISIBLE_TECHS = 4
+
+const visibleTechs = computed(() => {
+  return props.project.techs?.slice(0, MAX_VISIBLE_TECHS) ?? []
+})
+
+const extraTechsCount = computed(() => {
+  const total = props.project.techs?.length ?? 0
+  return Math.max(0, total - MAX_VISIBLE_TECHS)
+})
 </script>
 
 <template>
@@ -34,9 +47,19 @@ defineProps({
         {{ project.summary }}
       </p>
       <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-border">
-        <template v-for="(tech, index) in project.techs" :key="`${project.title}-${tech}-${index}`">
-          <span class="text-xs text-primary font-mono font-bold tracking-wider uppercase bg-primary/10 px-3 py-1 rounded shadow-sm border border-primary/10">{{ tech }}</span>
-        </template>
+        <span 
+          v-for="(tech, index) in visibleTechs" 
+          :key="`${project.title}-${tech}-${index}`"
+          class="text-xs text-primary font-mono font-bold tracking-wider uppercase bg-primary/10 px-3 py-1 rounded shadow-sm border border-primary/10"
+        >
+          {{ tech }}
+        </span>
+        <span 
+          v-if="extraTechsCount > 0"
+          class="text-xs text-muted font-mono font-medium bg-surface px-3 py-1 rounded border border-border"
+        >
+          +{{ extraTechsCount }}
+        </span>
       </div>
     </div>
   </div>

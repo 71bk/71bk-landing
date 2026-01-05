@@ -4,7 +4,7 @@
     <div class="admin-flex-between admin-mb-3">
       <h1>訊息紀錄</h1>
       <div class="header-filters">
-        <select v-model="directionFilter" class="admin-input filter-select" @change="loadLogs">
+        <select v-model="directionFilter" class="admin-input filter-select" @change="onFilterChange">
           <option value="">全部方向</option>
           <option value="INBOUND">僅接收</option>
           <option value="OUTBOUND">僅發送</option>
@@ -113,6 +113,28 @@
       <div v-if="logs.length === 0" class="empty-state">
         沒有符合篩選條件的紀錄。
       </div>
+
+      <!-- Pagination -->
+      <div v-if="totalPages > 1" class="pagination">
+        <button
+          class="admin-btn admin-btn-secondary btn-sm"
+          :disabled="currentPage === 0"
+          @click="goToPage(currentPage - 1)"
+        >
+          ← 上一頁
+        </button>
+        <span class="page-info">
+          第 {{ currentPage + 1 }} / {{ totalPages }} 頁
+          <span class="total-count">(共 {{ totalElements }} 筆)</span>
+        </span>
+        <button
+          class="admin-btn admin-btn-secondary btn-sm"
+          :disabled="currentPage >= totalPages - 1"
+          @click="goToPage(currentPage + 1)"
+        >
+          下一頁 →
+        </button>
+      </div>
     </div>
 
     <!-- JSON Payload Modal -->
@@ -156,6 +178,11 @@ const pushMessageText = ref('')
 const isSending = ref(false)
 const pushError = ref(null)
 
+// Pagination state
+const currentPage = ref(0)
+const totalPages = ref(0)
+const totalElements = ref(0)
+
 // Modal state
 const showModal = ref(false)
 const selectedLog = ref(null)
@@ -177,7 +204,7 @@ const loadLogs = async () => {
     isLoading.value = true
     error.value = null
     
-    const params = {}
+    const params = { page: currentPage.value }
     if (directionFilter.value) {
       params.direction = directionFilter.value
     }
@@ -187,12 +214,20 @@ const loadLogs = async () => {
     // Handle paginated response (backend uses 'items' instead of 'content')
     if (response.items) {
       logs.value = response.items
+      totalPages.value = response.totalPages || 1
+      totalElements.value = response.totalElements || response.items.length
     } else if (response.content) {
       logs.value = response.content
+      totalPages.value = response.totalPages || 1
+      totalElements.value = response.totalElements || response.content.length
     } else if (Array.isArray(response)) {
       logs.value = response
+      totalPages.value = 1
+      totalElements.value = response.length
     } else {
       logs.value = []
+      totalPages.value = 0
+      totalElements.value = 0
     }
   } catch (err) {
     error.value = '載入訊息紀錄失敗，請稍後再試。'
@@ -295,6 +330,19 @@ const openModal = (log) => {
 const closeModal = () => {
   showModal.value = false
   selectedLog.value = null
+}
+
+// Pagination
+const goToPage = (page) => {
+  if (page < 0 || page >= totalPages.value) return
+  currentPage.value = page
+  loadLogs()
+}
+
+// Reset to first page when filter changes
+const onFilterChange = () => {
+  currentPage.value = 0
+  loadLogs()
 }
 </script>
 
@@ -504,5 +552,25 @@ const closeModal = () => {
   justify-content: flex-end;
   padding: 1rem 1.5rem;
   border-top: 1px solid rgb(var(--color-border));
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-top: 1px solid rgb(var(--color-border));
+}
+
+.page-info {
+  font-size: 0.875rem;
+  color: rgb(var(--color-text-main));
+}
+
+.total-count {
+  color: rgb(var(--color-text-muted));
+  margin-left: 0.25rem;
 }
 </style>

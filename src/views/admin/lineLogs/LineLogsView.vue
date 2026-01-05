@@ -184,8 +184,10 @@ const loadLogs = async () => {
     
     const response = await lineApi.getUserMessages(userIdFromQuery, params)
     
-    // Handle paginated response
-    if (response.content) {
+    // Handle paginated response (backend uses 'items' instead of 'content')
+    if (response.items) {
+      logs.value = response.items
+    } else if (response.content) {
       logs.value = response.content
     } else if (Array.isArray(response)) {
       logs.value = response

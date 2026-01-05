@@ -40,10 +40,10 @@ function markdownToHtml(markdown) {
     // 斜體
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/_(.+?)_/g, '<em>$1</em>')
+    // 圖片（放在連結前，因為圖片語法包含 ! 前綴）
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />')
     // 連結
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-    // 圖片
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />')
 
   // 處理無序列表
   html = processUnorderedLists(html)
